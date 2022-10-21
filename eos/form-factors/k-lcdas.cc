@@ -198,6 +198,12 @@ namespace eos
     {
     }
 
+    PseudoscalarLCDAs *
+    KaonLCDAs::make(const Parameters & p, const Options & o)
+    {
+        return new KaonLCDAs(p, o);
+    }
+
     double
     KaonLCDAs::a1(const double & mu) const
     {
