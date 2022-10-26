@@ -107,9 +107,9 @@ class KaonLCDAsTest :
                 TEST_CHECK_NEARLY_EQUAL( 0.00450,   k.f3(1.0),        eps);
                 TEST_CHECK_NEARLY_EQUAL( 0.00343,   k.f3(2.0),        eps);
                 TEST_CHECK_NEARLY_EQUAL( 0.00308,   k.f3(3.0),        eps);
-                TEST_CHECK_NEARLY_EQUAL( 1.86233,   k.mu(1.0),        eps);
-                TEST_CHECK_NEARLY_EQUAL( 2.45562,   k.mu(2.0),        eps);
-                TEST_CHECK_NEARLY_EQUAL( 2.71996,   k.mu(3.0),        eps);
+                TEST_CHECK_NEARLY_EQUAL( 1.86233,   k.mu3(1.0),        eps);
+                TEST_CHECK_NEARLY_EQUAL( 2.45562,   k.mu3(2.0),        eps);
+                TEST_CHECK_NEARLY_EQUAL( 2.71996,   k.mu3(3.0),        eps);
                 TEST_CHECK_NEARLY_EQUAL( 0.01548,   k.eta3(1.0),      eps);
                 TEST_CHECK_NEARLY_EQUAL( 0.00894,   k.eta3(2.0),      eps);
                 TEST_CHECK_NEARLY_EQUAL( 0.00725,   k.eta3(3.0),      eps);

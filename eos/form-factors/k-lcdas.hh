@@ -40,7 +40,7 @@ namespace eos
             double a2(const double & mu) const;
 
             /* Twist 3 LCDA parameters */
-            double mu(const double & mu) const;
+            double mu3(const double & mu) const;
             double f3(const double & mu) const;
             double eta3(const double & mu) const;
             double lambda3(const double & mu) const;

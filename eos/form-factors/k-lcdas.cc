@@ -211,7 +211,7 @@ namespace eos
     }
 
     double
-    KaonLCDAs::mu(const double & mu) const
+    KaonLCDAs::mu3(const double & mu) const
     {
         return _imp->muK(mu);
     }
