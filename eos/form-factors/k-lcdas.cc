@@ -136,10 +136,10 @@ namespace eos
             const double mu_0  = 1.0; // initial state is fixed at 1 GeV
             const double m_s_0 = model->m_s_msbar(mu_0);
 
-            return f3K_0 * omega3K_0 * std::pow(c_rge, 105.0 / 9.0)
+            return (f3K_0 * omega3K_0 * std::pow(c_rge, 104.0 / 9.0)
                 + 1.0 / 170.0 * (std::pow(c_rge, 4.0)        - std::pow(c_rge, 104.0 / 9.0)) * f_K * m_s_0
                 + 1.0 /  10.0 * (std::pow(c_rge, 68.0 / 9.0) - std::pow(c_rge, 104.0 / 9.0)) * f_K * m_s_0 * a1K_0
-                + 2.0 /  15.0 * (std::pow(c_rge, 86.0 / 9.0) - std::pow(c_rge, 104.0 / 9.0)) * f_K * m_s_0 * a2K_0;
+                + 2.0 /  15.0 * (std::pow(c_rge, 86.0 / 9.0) - std::pow(c_rge, 104.0 / 9.0)) * f_K * m_s_0 * a2K_0) / f3K(mu);
         }
 
         double lambda3K(const double & mu) const
@@ -148,10 +148,10 @@ namespace eos
             const double mu_0  = 1.0; // initial state is fixed at 1 GeV
             const double m_s_0 = model->m_s_msbar(mu_0);
 
-            return f3K_0 * lambda3K_0 * std::pow(c_rge, 139.0 / 18.0)
+            return (f3K_0 * lambda3K_0 * std::pow(c_rge, 139.0 / 18.0)
                 - 14.0 / 67.0 * (std::pow(c_rge, 4.0)        - std::pow(c_rge, 139.0 / 18.0)) * f_K * m_s_0
                 + 14.0 /  5.0 * (std::pow(c_rge, 68.0 / 9.0) - std::pow(c_rge, 139.0 / 18.0)) * f_K * m_s_0 * a1K_0
-                - 4.0  / 11.0 * (std::pow(c_rge, 86.0 / 9.0) - std::pow(c_rge, 139.0 / 18.0)) * f_K * m_s_0 * a2K_0;
+                - 4.0  / 11.0 * (std::pow(c_rge, 86.0 / 9.0) - std::pow(c_rge, 139.0 / 18.0)) * f_K * m_s_0 * a2K_0) / f3K(mu);
         }
 
         inline double eta3K(const double & mu) const
@@ -184,7 +184,7 @@ namespace eos
             const double c_rge  = this->c_rge(mu);
             const double mu_0   = 1.0;
 
-            return omega4K_0 * delta4K_0 * std::pow(c_rge, 10.0);
+            return 1.0 / delta4K(mu) * omega4K_0 * delta4K_0 * std::pow(c_rge, 10.0);
         }
 
     };
@@ -286,7 +286,6 @@ namespace eos
         const double eta3K    = _imp->eta3K(mu);
         const double omega3K  = _imp->omega3K(mu);
         const double lambda3K = _imp->lambda3K(mu);
-        const double f3K      = _imp->f3K(mu);
 
         // Gegenbauer polynomials C_n^(1/2)
         const double x = 2.0 * u - 1.0, x2 = x * x, x3 = x2 * x, x4 = x2 * x2;
@@ -298,8 +297,8 @@ namespace eos
         return 1.0 + 3.0 * rhopK * (1.0 + 6.0 * a2K) - 9.0 * rhomK * a1K
             + c1 * (27.0 / 2.0 * rhopK * a1K - rhomK * (3.0 / 2.0 + 27.0 * a2K))
             + c2 * (30.0 * eta3K + 15.0 * rhopK * a2K - 3.0 * rhomK * a1K)
-            + c3 * (10.0 * eta3K * lambda3K / f3K - 9.0 / 2.0 * rhomK * a2K)
-            + c4 * (-3.0 * eta3K * omega3K / f3K)
+            + c3 * (10.0 * eta3K * lambda3K - 9.0 / 2.0 * rhomK * a2K)
+            + c4 * (-3.0 * eta3K * omega3K)
             + 3.0 / 2.0 * (rhopK + rhomK) * (1.0 - 3.0 * a1K + 6.0 * a2K) * std::log(u)
             + 3.0 / 2.0 * (rhopK - rhomK) * (1.0 + 3.0 * a1K + 6.0 * a2K) * std::log(1.0 - u);
     }
@@ -321,7 +320,6 @@ namespace eos
         const double eta3K    = _imp->eta3K(mu);
         const double omega3K  = _imp->omega3K(mu);
         const double lambda3K = _imp->lambda3K(mu);
-        const double f3K      = _imp->f3K(mu);
 
         // Gegenbauer polynomials C_n^(3/2)
         const double x = 2.0 * u - 1.0, x2 = x * x, x3 = x2 * x, x4 = x2 * x2;
@@ -334,8 +332,8 @@ namespace eos
         return 6.0 * u * ubar * (
             1.0 + 3.0 / 2.0 * rhopK + 15.0 * rhopK * a2K - 15.0 / 2.0 * rhomK * a1K
             + c1 * (3.0 * rhopK * a1K - 15.0 / 2.0 * rhomK * a2K)
-            + c2 * (5.0 * eta3K - 1.0 / 2.0 * eta3K * omega3K / f3K + 3.0 / 2.0 * rhopK * a2K)
-            + c3 * (eta3K * lambda3K / f3K))
+            + c2 * (5.0 * eta3K - 1.0 / 2.0 * eta3K * omega3K + 3.0 / 2.0 * rhopK * a2K)
+            + c3 * (eta3K * lambda3K))
             + 9.0 * u * ubar * (rhopK + rhomK) * (1.0 - 3.0 * a1K + 6.0 * a2K) * std::log(u)
             + 9.0 * u * ubar * (rhopK - rhomK) * (1.0 + 3.0 * a1K + 6.0 * a2K) * std::log(1.0 - u)
         ;
@@ -358,7 +356,6 @@ namespace eos
         const double eta3K    = _imp->eta3K(mu);
         const double omega3K  = _imp->omega3K(mu);
         const double lambda3K = _imp->lambda3K(mu);
-        const double f3K      = _imp->f3K(mu);
 
         const double ubar = 1.0 - u, x = 2.0 * u - 1.0;
         const double u2 = u * u, u3 = u2 * u, u4 = u3 * u;
@@ -368,7 +365,7 @@ namespace eos
             + 3.0 * a2K  * (7.0 - 30.0 * u + 30.0 * u2 + 2.0 * x * (std::log(ubar) - std::log(u))))
             + x * (2.0 + 3.0 * rhopK * (2.0 + std::log(u) + std::log(ubar) + 3.0 * a1K * (-3.0 + 6.0 * u - std::log(u) + std::log(ubar))
             + a2K * (22.0 - 60.0 * u + 60.0 * u2 + 6.0 * (std::log(u) + std::log(ubar))))))
-            - 6.0 * eta3K * (10.0 * lambda3K * (1.0 - 20.0 * u + 90.0 * u2 - 140.0 * u3 + 70.0 * u4) + 3.0 * omega3K * (1.0 - 12.0 * u + 30.0 * u2 - 20.0 * u3)) / f3K
+            - 6.0 * eta3K * (10.0 * lambda3K * (1.0 - 20.0 * u + 90.0 * u2 - 140.0 * u3 + 70.0 * u4) + 3.0 * omega3K * (1.0 - 12.0 * u + 30.0 * u2 - 20.0 * u3))
         ;
     }
 
@@ -408,15 +405,15 @@ namespace eos
 
         // Twist 4 contributions
         const double phi4T4 = 200.0 / 3.0 * delta4K * u2 * ubar2 + 20.0 * u2 * ubar2 * x * (4.0 * theta1K - 5.0 * theta2K)
-            + 21.0 * omega4K * (u * ubar * (2.0 + 13.0 * u * ubar) + (2.0 * u3 * (6.0 * u2 - 15.0 * u + 10.0) * lnu)
+            + 21.0 * delta4K * omega4K * (u * ubar * (2.0 + 13.0 * u * ubar) + (2.0 * u3 * (6.0 * u2 - 15.0 * u + 10.0) * lnu)
             + (2.0 * ubar3 * (6.0 * ubar2 - 15.0 * ubar + 10.0) * lnubar))
             + 40.0 * phi2K * (u * ubar * x * (2.0 - 3.0 * u * ubar) - (2.0 * u3 * (u - 2.0) * lnu)
             + (2.0 * ubar3 * (ubar - 2.0) * lnubar));
         const double phi4WW = 16.0 / 3.0 * m_K * m_K * kappa4K * (u * ubar * x * (1.0 - 2.0 * u * ubar)
             + (5.0 * (u - 2.0) * u3 * lnu) - (5.0 * (ubar - 2.0) * ubar3 * lnubar))
             + 4.0 * f3K / f_K * (m_s + m_ud) * u * ubar * (30.0 * (1.0 - x * (m_s - m_ud) / (m_s + m_ud))
-            + 10.0 * lambda3K / f3K * (x * (1.0 - u * ubar) - (m_s - m_ud) / (m_s + m_ud) * (1.0 - 5.0 * u * ubar))
-            - omega3K / f3K * (3.0 - 21.0 * u * ubar + 28.0 * u2 * ubar2 + 3.0 * x * (m_s - m_ud) / (m_s + m_ud) * (1.0 - 7.0 * u * ubar)))
+            + 10.0 * lambda3K * (x * (1.0 - u * ubar) - (m_s - m_ud) / (m_s + m_ud) * (1.0 - 5.0 * u * ubar))
+            - omega3K * (3.0 - 21.0 * u * ubar + 28.0 * u2 * ubar2 + 3.0 * x * (m_s - m_ud) / (m_s + m_ud) * (1.0 - 7.0 * u * ubar)))
             - 36.0 / 5.0 * m_K * m_K * a2K * (1.0 / 4.0 * u * ubar * (4.0 - 9.0 * u * ubar + 110.0 * u2 * ubar2)
             + (u3 * (10.0 - 15.0 * u + 6.0 * u2) * lnu) + (ubar3 * (10.0 - 15.0 * ubar + 6.0 * ubar2) * lnubar))
             + 4.0 * m_K * m_K * u * ubar * (1.0 + 3.0 * u * ubar) * (1.0 + 9.0 / 5.0 * a1K * x);
@@ -470,8 +467,8 @@ namespace eos
         const double psi4WW = c0 * m_K * m_K * (1.0 + 6.0 * rhopK * (1.0 + 6.0 * a2K) - 18.0 * rhomK * a1K)
             + c1 * m_K * m_K * (-12.0 * kappa4K - 9.0 / 5.0 * a1K + 27.0 * rhopK * a1K - 3.0 * rhomK * (1.0 + 18.0 * a2K))
             + c2 * (m_K * m_K * (1.0 + 18.0 / 7.0 * a2K + 30.0 * rhopK * a2K - 6.0 * rhomK * a1K) + 60.0 * f3K / f_K * (m_s + m_ud))
-            + c3 * (m_K * m_K * (9.0 / 5.0 * a1K + 16.0 / 3.0 * kappa4K - 9.0 * rhomK * a2K) + 20.0 * lambda3K / f_K * (m_s + m_ud))
-            + c4 * (-9.0 / 28.0 * m_K * m_K * a2K - 6.0 * omega3K / f_K * (m_s + m_ud))
+            + c3 * (m_K * m_K * (9.0 / 5.0 * a1K + 16.0 / 3.0 * kappa4K - 9.0 * rhomK * a2K) + 20.0 * f3K * lambda3K / f_K * (m_s + m_ud))
+            + c4 * (-9.0 / 28.0 * m_K * m_K * a2K - 6.0 * f3K * omega3K / f_K * (m_s + m_ud))
             + 6.0 * m_ud * (m_s + m_ud) * (1.0 + 3.0 * a1K + 6.0 * a2K) * lnubar
             + 6.0 * m_s * (m_s + m_ud) * (1.0 - 3.0 * a1K + 6.0 * a2K) * lnu;
 
