@@ -180,6 +180,26 @@ class KaonLCDAsTest :
                 TEST_CHECK_NEARLY_EQUAL( 0.7047138,  k.phi4(0.2, 2.0), eps);
                 TEST_CHECK_NEARLY_EQUAL( 0.9951251,  k.phi4(0.3, 2.0), eps);
 
+                // phi4_d1, scale mu = 1.0 GeV
+                TEST_CHECK_NEARLY_EQUAL( 4.4620021,  k.phi4_d1(0.1, 1.0), eps);
+                TEST_CHECK_NEARLY_EQUAL( 3.9998662,  k.phi4_d1(0.2, 1.0), eps);
+                TEST_CHECK_NEARLY_EQUAL( 2.4640881,  k.phi4_d1(0.3, 1.0), eps);
+
+                // phi4_d1, scale mu = 2.0 GeV
+                TEST_CHECK_NEARLY_EQUAL( 3.8605584,  k.phi4_d1(0.1, 2.0), eps);
+                TEST_CHECK_NEARLY_EQUAL( 3.4981208,  k.phi4_d1(0.2, 2.0), eps);
+                TEST_CHECK_NEARLY_EQUAL( 2.2204189,  k.phi4_d1(0.3, 2.0), eps);
+
+                // phi4_d2, scale mu = 1.0 GeV
+                TEST_CHECK_NEARLY_EQUAL( 5.1756370,  k.phi4_d2(0.1, 1.0), eps);
+                TEST_CHECK_NEARLY_EQUAL(-11.853091,  k.phi4_d2(0.2, 1.0), eps);
+                TEST_CHECK_NEARLY_EQUAL(-17.534042,  k.phi4_d2(0.3, 1.0), eps);
+
+                // phi4_d1, scale mu = 2.0 GeV
+                TEST_CHECK_NEARLY_EQUAL( 4.0930711,  k.phi4_d2(0.1, 2.0), eps);
+                TEST_CHECK_NEARLY_EQUAL(-9.5516052,  k.phi4_d2(0.2, 2.0), eps);
+                TEST_CHECK_NEARLY_EQUAL(-14.988734,  k.phi4_d2(0.3, 2.0), eps);
+
                 // psi4, scale mu = 1.0 GeV
                 TEST_CHECK_NEARLY_EQUAL( 0.7499464,  k.psi4(0.1, 1.0), eps);
                 TEST_CHECK_NEARLY_EQUAL( 0.0239059,  k.psi4(0.2, 1.0), eps);
@@ -189,6 +209,16 @@ class KaonLCDAsTest :
                 TEST_CHECK_NEARLY_EQUAL( 0.6285379,  k.psi4(0.1, 2.0), 5.0 * eps);
                 TEST_CHECK_NEARLY_EQUAL(-0.0001853,  k.psi4(0.2, 2.0), 5.0 * eps);
                 TEST_CHECK_NEARLY_EQUAL(-0.3769193,  k.psi4(0.3, 2.0), 5.0 * eps);
+
+                // psi4_i, scale mu = 1.0 GeV
+                TEST_CHECK_NEARLY_EQUAL( 0.11495761, k.psi4_i(0.1, 1.0), eps);
+                TEST_CHECK_NEARLY_EQUAL( 0.15147381, k.psi4_i(0.2, 1.0), eps);
+                TEST_CHECK_NEARLY_EQUAL( 0.12889238, k.psi4_i(0.3, 1.0), eps);
+
+                // psi4_i, scale mu = 2.0 GeV
+                TEST_CHECK_NEARLY_EQUAL( 0.1013258,  k.psi4_i(0.1, 2.0), 5.0 * eps);
+                TEST_CHECK_NEARLY_EQUAL( 0.1306347,  k.psi4_i(0.2, 2.0), 5.0 * eps);
+                TEST_CHECK_NEARLY_EQUAL( 0.1097363,  k.psi4_i(0.3, 2.0), 5.0 * eps);
             }
         }
 } k_lcdas_test;

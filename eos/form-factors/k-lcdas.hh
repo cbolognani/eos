@@ -59,12 +59,12 @@ namespace eos
             double phi3s(const double & u, const double & mu) const;
             double phi3s_d1(const double & u, const double & mu) const;
 
-            /* Twist 4 LCDAs, their derivatives and integrals */ //NOT YET
+            /* Twist 4 LCDAs, their derivatives and integrals */
             double phi4(const double & u, const double & mu) const;
-            //double phi4_d1(const double & u, const double & mu) const;
-            //double phi4_d2(const double & u, const double & mu) const;
+            double phi4_d1(const double & u, const double & mu) const;
+            double phi4_d2(const double & u, const double & mu) const;
             double psi4(const double & u, const double & mu) const;
-            //double psi4_i(const double & u, const double & mu) const;
+            double psi4_i(const double & u, const double & mu) const;
 
             /* Internal diagnostics */
             Diagnostics diagnostics() const;
