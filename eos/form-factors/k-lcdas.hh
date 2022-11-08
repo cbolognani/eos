@@ -42,8 +42,8 @@ namespace eos
             /* Twist 2 LCDA Gegenbauer coefficients */
             double a1(const double & mu) const override;
             double a2(const double & mu) const override;
-            double a3(const double & mu) const override { return 0.0; }
-            double a4(const double & mu) const override { return 0.0; }
+            double a3(const double & /*mu*/) const override { return 0.0; }
+            double a4(const double & /*mu*/) const override { return 0.0; }
 
             /* Twist 3 LCDA parameters */
             double mu3(const double & mu) const override;
