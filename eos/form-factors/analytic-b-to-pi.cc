@@ -291,31 +291,40 @@ namespace eos
             const double mb = this->m_b_msbar(mu), mb2 = mb * mb, mpi2 = mpi * mpi;
             const double mu3 = lcdas->mu3(mu);
             const double omega3 = lcdas->omega3(mu);
+            const double lambda3 = lcdas->lambda3(mu);
 
             // auxilliary functions and their first derivatives
             auto I3 = [&] (const double & u) -> double
             {
                 const double u3 = u * u * u, ubar2 = (1.0 - u) * (1.0 - u);
 
-                return 5.0 / 2.0 * u3 * ubar2 * (12.0 + (7.0 * u - 4) * omega3);
+                return 5.0 / 2.0 * u3 * ubar2 * (12.0 + (7.0 * u - 4) * (omega3 + 2.0 * lambda3));
             };
             auto I3_d1 = [&] (const double & u) -> double
             {
                 const double u2 = u * u, ubar = 1.0 - u;
 
-                return 15.0 * u2 * ubar * (6.0 - 10.0 * u - (2.0 - 8.0 * u + 7.0 * u2) * omega3);
+                return 15.0 * u2 * ubar * (6.0 - 10.0 * u - (2.0 - 8.0 * u + 7.0 * u2) * (omega3 + 2.0 * lambda3));
             };
             auto I3bar = [&] (const double & u) -> double
             {
-                const double u3 = u * u * u, ubar2 = (1.0 - u) * (1.0 - u);
+                const double u2 = u * u, u3 = u2 * u, ubar2 = (1.0 - u) * (1.0 - u);
 
-                return 5.0 / 2.0 * u3 * ubar2 * (24.0 * u + 6.0 * u * omega3 - 3.0 * (omega3 + 4.0));
+                return 5.0 / 2.0 * u3 * ubar2 * (
+                    -12.0 + 24.0 * u
+                    - (3.0 + -6.0 * u) * omega3
+                    + (6.0 - 28.0 * u + 28.0 * u2) * lambda3
+                );
             };
             auto I3bar_d1 = [&] (const double & u) -> double
             {
                 const double u2 = u * u, u3 = u2 * u;
 
-                return 15.0 / 2.0 * u2 * (12.0 * u3 - 25.0 * u2 + 16.0 * u - 3.0) * (omega3 + 4.0);
+                return 15.0 / 2.0 * u2 * (1.0 - u) * (
+                    -12.0 * (3.0 - 13.0 * u + 12.0 * u2)
+                    + (-9.0 + 39.0 * u - 36.0 * u2) * omega3
+                    + 2.0 * (9.0 - 71.0 * u + 154.0 * u2 - 98.0 * u3) * lambda3
+                );
             };
 
             const double u2 = u * u;
@@ -851,19 +860,28 @@ namespace eos
             const double mb = this->m_b_msbar(mu), mb2 = mb * mb, mpi2 = mpi * mpi;
             const double mu3 = lcdas->mu3(mu);
             const double omega3 = lcdas->omega3(mu);
+            const double lambda3 = lcdas->lambda3(mu);
 
             // auxilliary functions and their first derivatives
             auto I3til = [&] (const double & u) -> double
             {
                 const double u2 = u * u, ubar2 = (1.0 - u) * (1.0 - u);
 
-                return 5.0 / 2.0 * u2 * ubar2 * (28.0 * u2 * omega3 - 2.0 * u * (17.0 * omega3 + 12.0) + 9.0 * (omega3 + 4.0));
+                return 5.0 / 2.0 * u2 * ubar2 * (
+                    36.0 - 24.0 * u
+                    + (9.0 - 34.0 * u + 28.0 * u2) * omega3
+                    + (-18.0 + 52.0 * u - 28.0 * u2) * lambda3
+                );
             };
             auto I3til_d1 = [&] (const double & u) -> double
             {
                 const double u2 = u * u, u3 = u2 * u;
 
-                return 15.0 * u * (u - 1.0) * (28.0 * u3 * omega3 - u2 * (47.0 * omega3 + 20.0) + u * (23.0 * omega3 + 36.0) - 3.0 * (omega3 + 4.0));
+                return 15.0 * u * (1.0 - u) * (
+                    4.0 * (3.0 - 9.0 * u + 5.0 * u2)
+                    + (3.0 - 23.0 * u + 47.0 * u2 - 28.0 * u3) * omega3
+                    + (-6.0 + 38.0 * u - 62.0 * u2 + 28.0 * u3) * lambda3
+                );
             };
 
             const double u2 = u * u;
