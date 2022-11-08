@@ -39,21 +39,21 @@ namespace eos
             static PseudoscalarLCDAs * make(const Parameters &, const Options &);
 
             /* Twist 2 LCDA (even) Gegenbauer coefficients */
-            double a1(const double &) const override { return 0.0; }
+            double a1(const double & /*mu*/) const override { return 0.0; }
             double a2(const double & mu) const override;
-            double a3(const double &) const override { return 0.0; }
+            double a3(const double & /*mu*/) const override { return 0.0; }
             double a4(const double & mu) const override;
 
             /* Twist 3 LCDA parameters */
             double mu3(const double & mu) const override;
             double f3(const double & mu) const override;
             double eta3(const double & mu) const override;
-            double lambda3(const double & mu) const override { return 0.0; }
+            double lambda3(const double & /*mu*/) const override { return 0.0; }
             double omega3(const double & mu) const override;
 
             /* Twist 4 LCDA parameter */
             double delta4(const double & mu) const override;
-            double kappa4(const double & mu) const override { return 0.0; }
+            double kappa4(const double & /*mu*/) const override { return 0.0; }
             double omega4(const double & mu) const override;
 
             /* Twist 2 LCDA */
