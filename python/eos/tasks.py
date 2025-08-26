@@ -239,7 +239,7 @@ def find_mode(analysis_file:str, posterior:str, base_directory:str='./', optimiz
             bfp = _bfp
             min_chi2 = _chi2
 
-    eos.completed(f'... optimization finished')
+    eos.ted(f'... optimization finished')
     eos.info('The best-fit point is:')
     for p, v in zip(analysis.varied_parameters, _bfp.point):
         eos.info(f'  - {p.name()} -> {v}')
@@ -300,6 +300,8 @@ def sample_mcmc(analysis_file:str, posterior:str, chain:int, base_directory:str=
     :type start_point: list-like, optional
     """
 
+    eos.inprogress(f'Beginning sampling...')
+
     analysis = analysis_file.analysis(posterior)
     rng = _np.random.mtrand.RandomState(int(chain) + 1701)
     try:
@@ -310,6 +312,7 @@ def sample_mcmc(analysis_file:str, posterior:str, chain:int, base_directory:str=
         for p in analysis.varied_parameters:
             eos.error(f' - {p.name()}: {p.evaluate()}')
 
+    eos.completed(f'...finished! Generated {N} samples.')
 
 @task('sample-prior', '{posterior}/samples')
 def sample_prior(analysis_file:str, posterior:str, base_directory:str='./', N:int=1000, seed:int=1701):
